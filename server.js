@@ -3,36 +3,42 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const mysql = require("mysql2");
+const db = require("./db"); // Import MySQL connection
+
 const admin = require("firebase-admin");
+
+// Import auth routes
+const authRoutes = require("./routes/auth");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
 // MySQL Database Connection
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-});
+// const db = mysql.createConnection({
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASS,
+//   database: process.env.DB_NAME,
+// });
 
-db.connect((err) => {
-  if (err) {
-    console.error("Database connection failed:", err);
-  } else {
-    console.log("Connected to MySQL");
-  }
-});
+// db.connect((err) => {
+//   if (err) {
+//     console.error("Database connection failed:", err);
+//   } else {
+//     console.log("Connected to MySQL");
+//   }
+// });
 
 // Firebase Admin SDK Setup
-const serviceAccount = require("./firebase-service-account.json"); // Download this from Firebase
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// const serviceAccount = require("./firebase-service-account.json"); // Download this from Firebase
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+// });
 
 // API Routes
+app.use("/api/auth", authRoutes);
+
 app.get("/", (req, res) => {
   res.send("E-commerce Backend is Running...");
 });
