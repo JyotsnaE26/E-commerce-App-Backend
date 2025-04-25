@@ -8,14 +8,11 @@ This is the backend service for the **CozyBite** e-commerce app, built with **No
 
 - **Node.js** – JavaScript runtime
 - **Express.js** – Web framework for Node
-- **MongoDB** – NoSQL database
-- **Mongoose** – ODM for MongoDB
+- **Mysql2** – MySQL database connector for Node.js
 - **dotenv** – Manage environment variables
 - **bcryptjs** – Password hashing
 - **jsonwebtoken** – JWT token generation and validation
 - **cors** – Enable Cross-Origin Resource Sharing
-- **nodemon** (dev only) – Hot reloading during development
-
 ---
 ## Install dependencies
 ```
