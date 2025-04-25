@@ -277,6 +277,7 @@ router.get("/orders/:orderId", async (req, res) => {
             SELECT 
                 o.orderid,
                 o.customerid,
+                c.customerName AS customerName, 
                 o.total_amount AS amountPaid,
                 o.delivery_address AS deliveryAddress,
                 o.delivery_time,
@@ -866,6 +867,40 @@ router.get("/admin/orders", async (req, res) => {
       res.status(500).json({ message: "Server error." });
     }
   });
+  
+// FETCH ORDER STATUS
+router.get("/order-tracking/:orderId", async (req, res) => {
+    const { orderId } = req.params;
 
+    try {
+        // Query to get the order status
+        const orderStatusSql = `
+            SELECT 
+                o.orderid,
+                o.status AS orderStatus,
+                o.delivery_time AS estimatedDeliveryTime,
+                o.created_at AS orderDateTime
+            FROM orders o
+            WHERE o.orderid = ?
+        `;
+
+        db.query(orderStatusSql, [orderId], (err, results) => {
+            if (err) {
+                console.error("Error fetching order status:", err);
+                return res.status(500).json({ message: "Database error." });
+            }
+
+            if (results.length === 0) {
+                return res.status(404).json({ message: "Order not found." });
+            }
+
+            // Send the order status as the response
+            res.status(200).json(results[0]);
+        });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ message: "Server error." });
+    }
+});
 
 module.exports = router;
