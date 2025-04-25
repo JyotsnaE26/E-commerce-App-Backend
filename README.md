@@ -21,16 +21,6 @@ This is the backend service for the **CozyBite** e-commerce app, built with **No
 ```
 npm install
 ```
-### Environment Variables
-Create a .env file in the root directory with database credentials:
-```
-DB_HOST=localhost
-DB_USER=your_mysql_user
-DB_PASS=your_mysql_password
-DB_NAME=your_database_name
-PORT=5000
-JWT_SECRET=your_jwt_secret  # if using authentication
-```
 ### Running server
 ```
 node server.js
