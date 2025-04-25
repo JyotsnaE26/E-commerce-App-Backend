@@ -12,7 +12,9 @@ const authRoutes = require("./routes/auth");
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // MySQL Database Connection
 // const db = mysql.createConnection({
@@ -38,6 +40,9 @@ app.use(bodyParser.json());
 
 // API Routes
 app.use("/api/auth", authRoutes);
+
+app.use("/uploads", express.static("uploads"));
+
 
 app.get("/", (req, res) => {
   res.send("E-commerce Backend is Running...");
